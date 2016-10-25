@@ -9,7 +9,10 @@ describe('Feature Test:', function() {
     airport = new Airport();
     plane = new Plane();
   });
-
+  describe('under normal conditions', function() {
+    beforeEach(function() {
+      spyOn(Math, 'random').and.returnValue(0);
+    });
     it ('planes can be instructed to land at an airport', function() {
       plane.land(airport);
       expect(airport.planes()).toContain(plane);
@@ -19,15 +22,20 @@ describe('Feature Test:', function() {
       plane.takeoff();
       expect(airport.planes()).not.toContain(plane);
     });
+  });
+
+  describe('under stormy conditions', function() {
     it('blocks takeoff when weather is stormy', function(){
+      spyOn(Math, 'random').and.returnValue(0);
       plane.land(airport)
-      spyOn(airport, 'isStormy').and.returnValue(true);
+      spyOn(airport._weather, 'isStormy').and.returnValue(true);
       expect(function(){ plane.takeoff();} ).toThrowError('cannot takeoff during storm');
       expect(airport.planes()).toContain(plane);
     });
     it('prevents landing when weather is stormy', function(){
-      spyOn(airport, 'isStormy').and.returnValue(true);
+      spyOn(Math, 'random').and.returnValue(1);
       expect(function(){ plane.land(airport);} ).toThrowError('plane cannot land during storm');
-      expect(airport.planes()).not.toContain(plane);
+      expect(airport.planes()).toEqual([]);
     });
+  });
 });
