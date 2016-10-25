@@ -14,10 +14,14 @@ Airport.prototype.clearForTakeOff = function(plane) {
 };
 
 Airport.prototype.clearForLanding = function(plane) {
+  if(this.isStormy()) {
+    throw new Error('plane cannot land during storm');
+  }
   this._hangar.push(plane);
 };
 
 Airport.prototype.isStormy = function() {
+
   return false;
 };
 
