@@ -21,30 +21,17 @@ describe('Airport', function() {
     airport.clearForTakeOff(plane);
     expect(airport.planes()).toEqual([]);
   });
+  describe('under stormy conditions', function() {
+    it('can check for stormy conditions', function() {
+      expect(airport.isStormy()).toBeFalsy();
+    });
+    it('does not clear planes for takeoff', function() {
+      spyOn(airport, 'isStormy').and.returnValue(true);
+      expect(function(){ airport.clearForTakeOff(plane); }).toThrowError('cannot takeoff during storm');
+    });
+  });
 });
-  // describe('plane taking off', function() {
-  //   it ('instructs a plane to take off', function() {
-  //     airport.land(plane);
-  //     airport.depart(plane);
-  //     expect(planes.length).toBe(0);
-  //   });
-  // });
-  //
-  // describe('avoiding collisions', function() {
-  //   it ('prevents landing when airport is full', function() {
-  //     for (var i = 0; i < (capacity+1); i++ ) {
-  //       airport.land(plane);
-  //     }
-  //     expect(airport.full()).toEqual(true);
-  //   });
-  //   it ('prevents landing when airport is full', function() {
-  //     for (var i = 0; i < (capacity+1); i++ ) {
-  //       airport.land(plane);
-  //     }
-  //     expect(airport.land()).toEqual("Airport is full");
-  //   });
-  // });
-  //
+
   // describe('stormy weather prevents take-off', function() {
   //   it ('plane cannot take off', function() {
   //     expect(airport.land(plane)).toBe("Too stormy");
