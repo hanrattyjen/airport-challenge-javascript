@@ -22,6 +22,11 @@ describe('Feature Test:', function() {
       plane.takeoff();
       expect(airport.planes()).not.toContain(plane);
     });
+    it('prevents plane from landing when capacity has been exceeded', function() {
+      plane.land(airport);
+      plane.land(airport);
+      expect(function(){ plane.land(airport); }).toThrowError('capacity exceeded');
+    });
   });
 
   describe('under stormy conditions', function() {

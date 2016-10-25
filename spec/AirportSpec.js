@@ -27,6 +27,11 @@ describe('Airport', function() {
       airport.clearForTakeOff(plane);
       expect(airport.planes()).toEqual([]);
     });
+    it('can prevent plane from landing when capacity has been exceeded', function() {
+      airport.clearForLanding(plane);
+      airport.clearForLanding(plane);
+      expect(function() { airport.clearForLanding(plane) }).toThrowError('capacity exceeded');
+    });
   });
 
   describe('under stormy conditions', function() {

@@ -1,8 +1,12 @@
 'use strict';
 
+var capacity = 2;
+
+
 function Airport(weather){
   this._weather = typeof weather !== 'undefined' ? weather : new Weather();
   this._hangar = [];
+  capacity = 2;
 }
 
 Airport.prototype.planes = function() {
@@ -21,4 +25,7 @@ Airport.prototype.clearForLanding = function(plane) {
     throw new Error('plane cannot land during storm');
   }
   this._hangar.push(plane);
+  if(this._hangar.length > capacity) {
+    throw new Error('capacity exceeded');
+  }
 };
